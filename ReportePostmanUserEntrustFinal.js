@@ -10,21 +10,22 @@
 }
 
 /* Pre Request Script */
-
 console.log("Inicia Pre Request Script");
 console.log("pm.info.iteration: ",pm.info.iteration);
 console.log("pm.info.iterationCount: ",pm.info.iterationCount);
 
 if(pm.info.iteration == 0){
     //pm.collectionVariables.set("nextCursor",null);
-    //pm.collectionVariables.set("nextCursor","eyJjdXJzb3IiOlt7InZhbHVlIjoiODAyNTg4NDEiLCJ0eXBlIjoiU1RSSU5HIn1dLCJuZXh0UGFnZSI6dHJ1ZSwic2VhcmNoQnlBdHRyaWJ1dGVzIjpbXSwib3JkZXJCeUF0dHJpYnV0ZSI6eyJuYW1lIjoidXNlcklkIiwiYXNjZW5kaW5nIjp0cnVlfSwibGltaXQiOjEwMCwiYXR0cmlidXRlcyI6WyJ1c2VyQXR0cmlidXRlVmFsdWVzIiwidXNlckFsaWFzZXMiXX0=");
+    pm.collectionVariables.set("nextCursor","eyJjdXJzb3IiOlt7InZhbHVlIjoiMTE5MzUxNjM3MyIsInR5cGUiOiJTVFJJTkcifV0sIm5leHRQYWdlIjp0cnVlLCJzZWFyY2hCeUF0dHJpYnV0ZXMiOltdLCJvcmRlckJ5QXR0cmlidXRlIjp7Im5hbWUiOiJ1c2VySWQiLCJhc2NlbmRpbmciOnRydWV9LCJsaW1pdCI6MTAwLCJhdHRyaWJ1dGVzIjpbInVzZXJBdHRyaWJ1dGVWYWx1ZXMiLCJ1c2VyQWxpYXNlcyJdfQ==");
 }
-//console.log("nextCursor on Pre-Request Script Tab: ",pm.collectionVariables.get("nextCursor"));
+console.log("nextCursor on Pre-Request Script Tab: ",pm.collectionVariables.get("nextCursor"));
+
 //pm.variables.set("currentNextCursor", '"'+pm.collectionVariables.get("nextCursor")+'"' );
+//
 
 if(pm.info.iteration == 0){      
     //pm.variables.set("currentNextCursor",null);
-    //pm.variables.set("currentNextCursor", '"'+pm.collectionVariables.get("nextCursor")+'"' );
+    pm.variables.set("currentNextCursor", '"'+pm.collectionVariables.get("nextCursor")+'"' );
 }else{
     pm.variables.set("currentNextCursor", '"'+pm.collectionVariables.get("nextCursor")+'"' );
 }
@@ -33,7 +34,6 @@ console.log("currentNextCursor: ",pm.variables.get("currentNextCursor"));
 console.log("Finalizo el Pre request Script!");
 
 /* TEST TAB */
-
 
 //Se obtiene la respuesta de la API
 const response = pm.response.json();
@@ -84,10 +84,8 @@ if(objectCurrent == undefined ){
 //console.log("1")
 //console.log(nextCursor)
 //Valido si ya se llego al limite de recorridos para mostrar el json completo en texto plano y el siguiente token de consulta
-if(counSuma == 10){
+if(counSuma == 100 || pm.collectionVariables.get("nextCursor") == null){
     const objectFinish = pm.variables.get("objectCurrent");
     console.log(JSON.stringify(objectFinish));
     console.log(pm.collectionVariables.get("nextCursor"));
 }
-
-
